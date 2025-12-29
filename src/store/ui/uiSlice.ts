@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export type ModalType = "addTask" | null;
+import { ModalType } from "./constants";
 
 interface UIState {
   modal: ModalType;

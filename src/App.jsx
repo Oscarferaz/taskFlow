@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import TasksPage from "./features/tasks/pages/tasksPage"
+import { GlobalModals } from "./shared/components/ModalConductor"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         {/* Lazy import soon, for now direct import */}
         </div>
       </Suspense>
+      <GlobalModals />
     </div>
   )
 }
