@@ -1,26 +1,35 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
 import { Task } from "../../features/tasks/types/task";
+import { TASK_STATUS } from "../../features/tasks/constants";
 
 interface TasksState {
   items: Task[];
 }
 
-const initialState = {
-    items: [] as Task[]
-}
+const initialState: TasksState = {
+  items: [],
+};
 
 const tasksSlice = createSlice({
     name: "tasks",
     initialState,
     reducers: {
-        setTasks: (state, action: PayloadAction<Task[]>) => {
-            state.items = action.payload;
-        },
-        addTask: (state, action: PayloadAction<Task>) => {
-            state.items.push(action.payload);
-        },
+        addTask: {
+            reducer: (state, action: PayloadAction<Task>) => {
+                state.items.push(action.payload);
+            },
+            prepare: (title: string, description?: string) => ({
+                payload: {
+                id: nanoid(),
+                title,
+                description,
+                status: TASK_STATUS.TODO,
+                createdAt: Date.now(),
+                } as Task,
+            }),
+        }
     }
 })
 
-export const { setTasks, addTask } = tasksSlice.actions;
+export const {  addTask } = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;
